@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Money Concepts Trading Tutorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-green: #27ae60;
+            --accent-red: #e74c3c;
+            --accent-blue: #3498db;
+            --light-bg: #ecf0f1;
+            --dark-bg: #34495e;
+            --text-color: #2c3e50;
+            --border-color: #bdc3c7;
+            --premium-zone: #ffe6e6;
+            --discount-zone: #e6f3ff;
+            --neutral-zone: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #ffffff;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-bg) 100%);
+            color: white;
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        /* Special Boxes */
+        .info-box {
+            background-color: var(--light-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background-color: #d4edda;
+            border-left: 4px solid var(--accent-green);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        .danger-box {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--accent-red);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        /* Zone Illustrations */
+        .zone-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 2rem 0;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .zone {
+            padding: 2rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .premium-zone {
+            background-color: var(--premium-zone);
+            border-bottom: 2px dashed var(--border-color);
+        }
+
+        .equilibrium-zone {
+            background-color: var(--neutral-zone);
+            border-bottom: 2px dashed var(--border-color);
+        }
+
+        .discount-zone {
+            background-color: var(--discount-zone);
+        }
+
+        /* Trade Setup Cards */
+        .trade-setup {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .checklist {
+            background-color: white;
+            color: var(--text-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .checklist-item::before {
+            content: "☐";
+            font-size: 1.5rem;
+            margin-right: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        /* Code/Example Blocks */
+        .example {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--light-bg);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .badge-long {
+            background-color: var(--accent-green);
+            color: white;
+        }
+
+        .badge-short {
+            background-color: var(--accent-red);
+            color: white;
+        }
+
+        .badge-neutral {
+            background-color: var(--border-color);
+            color: var(--text-color);
+        }
+
+        /* Emoji Icons */
+        .icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Step Numbers */
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            section {
+                padding: 1rem;
+            }
+
+            nav a {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1);
+        }
+
+        /* Highlight important text */
+        strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--secondary-color);
+            font-style: normal;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>📈 Smart Money Concepts Trading Tutorial</h1>
+            <p class="subtitle">A Complete Beginner's Guide to Trading Like the Institutions</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-content">
+            <a href="#introduction">Introduction</a>
+            <a href="#chart-elements">Chart Elements</a>
+            <a href="#framework">Trading Framework</a>
+            <a href="#scenarios">Common Scenarios</a>
+            <a href="#practice">Practice</a>
+            <a href="#advanced">Advanced Tips</a>
+            <a href="#mistakes">Common Mistakes</a>
+            <a href="#routine">Trading Routine</a>
+            <a href="#cheatsheet">Cheat Sheet</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Introduction -->
+        <section id="introduction">
+            <h2>Introduction: What Is This Indicator?</h2>
+            
+            <p>Imagine the stock market as a poker game. Retail traders (like us) are playing with our cards face-up, but institutional traders (banks, hedge funds, billionaires) have sophisticated tools to see where everyone else's cards are. This indicator helps level the playing field by showing us where the "smart money" is positioning itself.</p>
+
+            <div class="info-box">
+                <strong>The Core Concept:</strong> Big institutional players leave footprints in the market. This indicator reveals those footprints so you can follow them rather than get trampled by them.
+            </div>
+        </section>
+
+        <!-- Part 1: Chart Elements -->
+        <section id="chart-elements">
+            <h2>Part 1: Understanding the Chart Elements</h2>
+
+            <h3>1.1 The Background Zones (Your Trading Roadmap)</h3>
+            
+            <p>Think of these zones like a traffic light system:</p>
+
+            <div class="zone-demo">
+                <div class="zone premium-zone">
+                    🔴 PREMIUM ZONE<br>
+                    <small>Price is "expensive" - SELL/SHORT here</small>
+                </div>
+                <div class="zone equilibrium-zone">
+                    ⚪ EQUILIBRIUM ZONE<br>
+                    <small>Fair value - WAIT for better zones</small>
+                </div>
+                <div class="zone discount-zone">
+                    🟢 DISCOUNT ZONE<br>
+                    <small>Price is "cheap" - BUY/LONG here</small>
+                </div>
+            </div>
+
+            <h4>🔴 Premium Zone (Light Red/Pink Background - Top Third)</h4>
+            <ul>
+                <li><strong>What it means:</strong> Price is "expensive" here</li>
+                <li><strong>Analogy:</strong> You're at the Apple Store on Black Friday and iPhones are 50% above retail price</li>
+                <li><strong>Trading rule:</strong> This is where you SELL or go SHORT</li>
+                <li><strong>Why:</strong> Smart money is likely taking profits here; price tends to fall from expensive levels</li>
+            </ul>
+
+            <h4>⚪ Equilibrium Zone (Gray/Middle Area)</h4>
+            <ul>
+                <li><strong>What it means:</strong> Fair value - price is neutral</li>
+                <li><strong>Analogy:</strong> The iPhone is at regular retail price</li>
+                <li><strong>Trading rule:</strong> Be cautious - wait for price to move to premium or discount</li>
+                <li><strong>Why:</strong> No edge here; price could go either way</li>
+            </ul>
+
+            <h4>🟢 Discount Zone (Light Blue Background - Bottom Third)</h4>
+            <ul>
+                <li><strong>What it means:</strong> Price is "cheap" here</li>
+                <li><strong>Analogy:</strong> The iPhone is 50% off at a clearance sale</li>
+                <li><strong>Trading rule:</strong> This is where you BUY or go LONG</li>
+                <li><strong>Why:</strong> Smart money accumulates here; price tends to rise from cheap levels</li>
+            </ul>
+
+            <div class="success-box">
+                <strong>💡 Key Insight:</strong> Always ask yourself, "Am I in premium, equilibrium, or discount?" This single question prevents 70% of bad trades.
+            </div>
+
+            <h3>1.2 Order Blocks (The Foundation Stones)</h3>
+
+            <p>Order blocks appear as <strong>solid colored rectangles</strong> on your chart:</p>
+            <ul>
+                <li><span class="badge badge-long">Dark Blue boxes</span> = Bullish Order Blocks</li>
+                <li><span class="badge badge-short">Dark Red/Pink boxes</span> = Bearish Order Blocks</li>
+            </ul>
+
+            <h4>What Are They?</h4>
+            <p>Order blocks mark the last candle before a strong price move, where institutions placed massive orders.</p>
+
+            <div class="info-box">
+                <strong>Analogy:</strong> Imagine you're driving and see a wall. That wall didn't appear magically - someone built it (institutions). Order blocks are like seeing the foundation of that wall. When price returns to the foundation, it often "bounces" off it.
+            </div>
+
+            <h4>How They Form:</h4>
+            
+            <div class="example">
+                <strong>Bullish Order Block Example:</strong><br>
+                1. Price is falling<br>
+                2. Suddenly, a strong upward move begins<br>
+                3. The indicator highlights the candle BEFORE the move (where big buyers stepped in)<br>
+                4. That becomes a blue support zone
+            </div>
+
+            <div class="example">
+                <strong>Bearish Order Block Example:</strong><br>
+                1. Price is rising<br>
+                2. Suddenly, a strong downward move begins<br>
+                3. The indicator highlights the candle BEFORE the move (where big sellers stepped in)<br>
+                4. That becomes a red resistance zone
+            </div>
+
+            <h4>How To Trade Them:</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>For LONG Trades</th>
+                        <th>For SHORT Trades</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Wait for price to return to a <strong>bullish order block</strong> (blue box)</td>
+                        <td>Wait for price to return to a <strong>bearish order block</strong> (red box)</td>
+                    </tr>
+                    <tr>
+                        <td>Ideally in the <strong>discount zone</strong></td>
+                        <td>Ideally in the <strong>premium zone</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Enter LONG when price touches the order block</td>
+                        <td>Enter SHORT when price touches the order block</td>
+                    </tr>
+                    <tr>
+                        <td>Stop loss: Just below the order block</td>
+                        <td>Stop loss: Just above the order block</td>
+                    </tr>
+                    <tr>
+                        <td>Target: Next resistance or opposite order block</td>
+                        <td>Target: Next support or opposite order block</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="danger-box">
+                <strong>🚨 Critical Rule:</strong> Order blocks are only valid UNTIL price closes through them. Once broken, they lose their power.
+            </div>
+
+            <h3>1.3 Market Structure (BOS & CHoCH) - Reading the Trend</h3>
+
+            <p>These labels appear on your chart showing institutional trend changes:</p>
+
+            <h4>BOS (Break of Structure)</h4>
+            <ul>
+                <li><strong>What it means:</strong> "Break of Structure" - the trend is CONTINUING</li>
+                <li><strong>Looks like:</strong> Price breaks through a previous high (uptrend) or low (downtrend)</li>
+                <li><strong>Analogy:</strong> Like a marathon runner breaking through mile markers - they're still going in the same direction, just gaining ground</li>
+            </ul>
+
+            <div class="success-box">
+                <strong>In an Uptrend (Green BOS):</strong>
+                <ul>
+                    <li>Price makes a higher high</li>
+                    <li>Confirms buyers are in control</li>
+                    <li>Safe to look for LONG entries</li>
+                </ul>
+            </div>
+
+            <div class="danger-box">
+                <strong>In a Downtrend (Red BOS):</strong>
+                <ul>
+                    <li>Price makes a lower low</li>
+                    <li>Confirms sellers are in control</li>
+                    <li>Safe to look for SHORT entries</li>
+                </ul>
+            </div>
+
+            <h4>CHoCH (Change of Character)</h4>
+            <ul>
+                <li><strong>What it means:</strong> The trend is REVERSING</li>
+                <li><strong>Looks like:</strong> Price breaks structure in the OPPOSITE direction of the previous trend</li>
+                <li><strong>Analogy:</strong> The marathon runner suddenly turns around and runs the other way - something changed!</li>
+            </ul>
+
+            <div class="success-box">
+                <strong>Bullish CHoCH (Green):</strong>
+                <ul>
+                    <li>Appeared during a downtrend</li>
+                    <li>Price breaks above a recent high</li>
+                    <li>Signals: Trend may be changing to bullish</li>
+                    <li><strong>Action:</strong> Stop looking for shorts; start looking for longs</li>
+                </ul>
+            </div>
+
+            <div class="danger-box">
+                <strong>Bearish CHoCH (Red):</strong>
+                <ul>
+                    <li>Appeared during an uptrend</li>
+                    <li>Price breaks below a recent low</li>
+                    <li>Signals: Trend may be changing to bearish</li>
+                    <li><strong>Action:</strong> Stop looking for longs; start looking for shorts</li>
+                </ul>
+            </div>
+
+            <h4>How To Use BOS & CHoCH:</h4>
+
+            <div class="warning-box">
+                <strong>The Golden Rule:</strong>
+                <ul>
+                    <li>Trade WITH BOS (following the trend)</li>
+                    <li>Be CAUTIOUS after CHoCH (trend is changing, wait for confirmation)</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <strong>Example Trading Flow:</strong><br>
+                1. See a Bullish CHoCH → Trend may be turning up<br>
+                2. Wait for a Bullish BOS → Confirms uptrend<br>
+                3. Wait for pullback to order block in discount zone<br>
+                4. Enter LONG<br>
+                5. Continue trading longs until you see a Bearish CHoCH
+            </div>
+
+            <h3>1.4 Equal Highs (EQH) and Equal Lows (EQL)</h3>
+
+            <p>These appear as dotted lines connecting swing points at the same level, labeled "EQH" or "EQL"</p>
+
+            <h4>What Are They?</h4>
+            <p>Multiple price peaks (highs) or valleys (lows) at approximately the same price level.</p>
+
+            <div class="info-box">
+                <strong>Analogy:</strong> Imagine a fence with several posts at the same height. Retail traders place their stop-losses just above/below these posts. Smart money KNOWS this and hunts those stops like a predator hunting prey at a watering hole.
+            </div>
+
+            <h4>Why They Matter:</h4>
+            <ul>
+                <li><strong>Liquidity pools:</strong> Clusters of stop-loss orders</li>
+                <li>Smart money intentionally breaks these levels to trigger stops</li>
+                <li>After the "stop hunt," price often reverses sharply</li>
+            </ul>
+
+            <h4>How To Trade Them:</h4>
+
+            <div class="danger-box">
+                <strong>EQH (Equal Highs) - Resistance:</strong>
+                <ul>
+                    <li>Multiple swing highs around $470 (example)</li>
+                    <li><strong>Expectation:</strong> Price will likely spike ABOVE $470 briefly (stop hunt)</li>
+                    <li><strong>Then:</strong> Reverse downward sharply</li>
+                    <li><strong>Trade:</strong> Wait for price to spike above, then enter SHORT on the rejection</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <strong>EQL (Equal Lows) - Support:</strong>
+                <ul>
+                    <li>Multiple swing lows around $440 (example)</li>
+                    <li><strong>Expectation:</strong> Price will likely spike BELOW $440 briefly (stop hunt)</li>
+                    <li><strong>Then:</strong> Reverse upward sharply</li>
+                    <li><strong>Trade:</strong> Wait for price to spike below, then enter LONG on the bounce</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Warning:</strong> NEVER place your stop-loss exactly at EQH/EQL levels. Smart money will hunt them. Place stops 1-2% beyond these levels.
+            </div>
+
+            <h3>1.5 Fair Value Gaps (FVGs)</h3>
+
+            <p>These are rectangular boxes showing price "gaps" - areas where price moved so fast that there was imbalanced trading.</p>
+
+            <h4>What Are They?</h4>
+            <p>When price jumps significantly in three candles, leaving a gap where minimal trading occurred.</p>
+
+            <div class="info-box">
+                <strong>Analogy:</strong> Imagine a highway with a missing section - eventually, engineers must return to fill that gap. The market works similarly; price tends to return to "fill" these gaps.
+            </div>
+
+            <h4>Types:</h4>
+            <ul>
+                <li><span class="badge badge-long">Bullish FVG (Green box)</span>: Gap created during sharp upward move</li>
+                <li><span class="badge badge-short">Bearish FVG (Red box)</span>: Gap created during sharp downward move</li>
+            </ul>
+
+            <h4>How To Trade Them:</h4>
+
+            <div class="example">
+                <strong>When Price Approaches an FVG:</strong><br><br>
+                <strong>Option 1 - The Fill:</strong><br>
+                • Price enters the FVG to "fill" it<br>
+                • Often acts as support/resistance<br>
+                • Enter a trade expecting price to bounce from the FVG<br><br>
+                <strong>Option 2 - The Rejection:</strong><br>
+                • Price touches the FVG edge and rejects<br>
+                • FVG acts as a barrier<br>
+                • Enter when rejection is confirmed
+            </div>
+
+            <div class="success-box">
+                <strong>🎯 Pro Tip:</strong> FVGs inside order blocks are extremely powerful setups. This is confluence - multiple reasons supporting the same trade.
+            </div>
+
+            <h3>1.6 Strong/Weak High & Low Labels</h3>
+
+            <p>These appear as text labels on the right side of your chart.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Label Type</th>
+                        <th>Meaning</th>
+                        <th>Trading Implication</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Strong High</strong></td>
+                        <td>A high made during a confirmed UPTREND (after BOS)</td>
+                        <td>Difficult for price to break; acts as strong resistance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Weak High</strong></td>
+                        <td>A high made during uncertain or changing structure</td>
+                        <td>Likely to be broken soon; don't expect it to hold</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Strong Low</strong></td>
+                        <td>A low made during a confirmed DOWNTREND</td>
+                        <td>Difficult for price to break; acts as strong support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Weak Low</strong></td>
+                        <td>A low made during uncertain structure</td>
+                        <td>Likely to be broken soon</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong>How To Use Them:</strong><br>
+                <strong>Weak High/Low Strategy:</strong>
+                <ul>
+                    <li><strong>Don't</strong> assume they'll hold as support/resistance</li>
+                    <li><strong>Do</strong> expect them to break</li>
+                    <li><strong>Trade:</strong> Position for the break or take profits before them</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Part 2: Trading Framework -->
+        <section id="framework">
+            <h2>Part 2: The Complete Trading Framework</h2>
+
+            <h3>2.1 The 5-Step Pre-Trade Checklist</h3>
+
+            <p>Before entering ANY trade, answer these five questions:</p>
+
+            <div class="trade-setup">
+                <h4 style="color: white;">Step 1: What Zone Am I In?</h4>
+                <div class="checklist">
+                    <div class="checklist-item">✅ Premium Zone → Look for SHORTS only</div>
+                    <div class="checklist-item">✅ Discount Zone → Look for LONGS only</div>
+                    <div class="checklist-item">❌ Equilibrium → WAIT (no edge)</div>
+                </div>
+
+                <h4 style="color: white;">Step 2: What's the Current Structure?</h4>
+                <div class="checklist">
+                    <div class="checklist-item">Look at the most recent BOS or CHoCH</div>
+                    <div class="checklist-item"><strong>Bullish structure</strong> (green BOS/CHoCH) → Long bias</div>
+                    <div class="checklist-item"><strong>Bearish structure</strong> (red BOS/CHoCH) → Short bias</div>
+                    <div class="checklist-item"><strong>Mixed or unclear</strong> → WAIT for clarity</div>
+                </div>
+
+                <h4 style="color: white;">Step 3: Is There an Order Block Here?</h4>
+                <div class="checklist">
+                    <div class="checklist-item">✅ Yes → Good potential entry</div>
+                    <div class="checklist-item">❌ No → Lower probability trade</div>
+                </div>
+
+                <h4 style="color: white;">Step 4: Is There Confluence?</h4>
+                <div class="checklist">
+                    <p style="color: #2c3e50;"><strong>Confluence means multiple factors supporting your trade:</strong></p>
+                    <div class="checklist-item">Order block + Discount zone = 2 factors ✅</div>
+                    <div class="checklist-item">Order block + Discount zone + FVG = 3 factors ✅✅</div>
+                    <div class="checklist-item">Order block + Discount zone + FVG + EQL = 4 factors ✅✅✅</div>
+                    <p style="color: #e74c3c; font-weight: bold;">Rule: Need at least 2 factors for confluence</p>
+                </div>
+
+                <h4 style="color: white;">Step 5: Where's My Risk/Reward?</h4>
+                <div class="checklist">
+                    <div class="checklist-item">Entry: At order block</div>
+                    <div class="checklist-item">Stop: Just beyond order block</div>
+                    <div class="checklist-item">Target: Next order block or structural level</div>
+                    <div class="checklist-item"><strong>Minimum required: 1:2 risk/reward</strong> (risk $1 to make $2)</div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>If all 5 steps align → HIGH PROBABILITY TRADE</strong>
+            </div>
+
+            <h3>2.2 Long Trade Setup (Step-by-Step)</h3>
+
+            <h4>The Perfect Long Setup:</h4>
+
+            <div class="example">
+                <strong>Phase 1: Identification</strong><br>
+                1. ✅ <strong>Zone Check:</strong> Price is in discount zone (light blue)<br>
+                2. ✅ <strong>Structure:</strong> Bullish CHoCH or BOS present<br>
+                3. ✅ <strong>Order Block:</strong> Blue order block present<br>
+                4. ✅ <strong>Confluence:</strong> EQL + Order block + Discount zone = 3 factors<br>
+                5. ✅ <strong>Risk/Reward:</strong> Entry $442, Stop $438, Target $465 = 1:5.75 ratio
+            </div>
+
+            <div class="example">
+                <strong>Phase 2: Entry Trigger</strong><br>
+                Wait for price to pull back to order block area:<br>
+                • <strong>Option A</strong> (Aggressive): Enter as soon as price touches the order block<br>
+                • <strong>Option B</strong> (Conservative): Wait for a bullish candle confirmation<br>
+                • <strong>Option C</strong> (Very Conservative): Wait for price to wick into the order block, then bounce
+            </div>
+
+            <div class="example">
+                <strong>Phase 3: Trade Management</strong><br>
+                • <strong>Entry:</strong> $443 (middle of order block)<br>
+                • <strong>Stop Loss:</strong> $437.50 (below order block and EQL)<br>
+                • <strong>Target 1:</strong> $456 (25% of position) - recent resistance<br>
+                • <strong>Target 2:</strong> $465 (50% of position) - premium zone entry<br>
+                • <strong>Target 3:</strong> $475 (remaining 25%) - premium zone mid-point
+            </div>
+
+            <div class="example">
+                <strong>Phase 4: Exit Strategy</strong><br>
+                • If price reaches Target 1 → Move stop loss to breakeven<br>
+                • If Bearish CHoCH appears → Exit immediately regardless of targets<br>
+                • If order block breaks (close below support) → Stop loss triggered, exit
+            </div>
+
+            <h3>2.3 Short Trade Setup (Step-by-Step)</h3>
+
+            <h4>The Perfect Short Setup:</h4>
+
+            <div class="example">
+                <strong>Phase 1: Identification</strong><br>
+                1. ✅ <strong>Zone Check:</strong> Price is in premium zone (light red)<br>
+                2. ✅ <strong>Structure:</strong> Bearish CHoCH or multiple bearish BOS<br>
+                3. ✅ <strong>Order Block:</strong> Red order block at resistance<br>
+                4. ✅ <strong>Confluence:</strong> EQH + Order block + Premium zone = 3 factors<br>
+                5. ✅ <strong>Risk/Reward:</strong> Minimum 1:2 ratio
+            </div>
+
+            <div class="example">
+                <strong>Phase 2-4:</strong> Follow the same process as long trades, but in reverse direction
+            </div>
+
+            <h3>2.4 Risk Management Rules (Non-Negotiable)</h3>
+
+            <div class="danger-box">
+                <h4>Position Sizing</h4>
+                <ul>
+                    <li>Never risk more than <strong>1-2% of your account</strong> on a single trade</li>
+                    <li>Example: $10,000 account = $100-200 max risk per trade</li>
+                    <li>If your stop loss is $5 away, you can buy: $200 risk ÷ $5 stop = 40 shares</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>Stop Loss Placement</h4>
+                <ul>
+                    <li><strong>For Longs:</strong> 1-2% below the order block</li>
+                    <li><strong>For Shorts:</strong> 1-2% above the order block</li>
+                    <li><strong>Never</strong> place stops at exact EQH/EQL levels (stop hunt zone)</li>
+                    <li><strong>Never</strong> widen your stop if the trade goes against you</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h4>Taking Profits</h4>
+                <ul>
+                    <li><strong>Scale out:</strong> Take partial profits at multiple targets</li>
+                    <li>Don't wait for the "perfect" exit</li>
+                    <li>Lock in profits as price moves in your favor</li>
+                </ul>
+            </div>
+
+            <div class="danger-box">
+                <h4>The 3-Strike Rule</h4>
+                <ul>
+                    <li>If you have 3 losing trades in a row → STOP</li>
+                    <li>Review your trades</li>
+                    <li>Identify what went wrong</li>
+                    <li>Paper trade until you find your rhythm again</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Part 3: Common Scenarios -->
+        <section id="scenarios">
+            <h2>Part 3: Common Scenarios & How To Trade Them</h2>
+
+            <h3>Scenario 1: Price in Discount + Order Block + EQL</h3>
+            <div class="success-box">
+                <strong>What you see:</strong>
+                <ul>
+                    <li>Price has fallen to discount zone</li>
+                    <li>There's a blue order block</li>
+                    <li>EQL is right below the order block</li>
+                </ul>
+                <strong>What it means:</strong> Triple confluence - extremely high probability long setup<br><br>
+                <strong>How to trade:</strong>
+                <ol>
+                    <li>Set a buy limit order at the order block</li>
+                    <li>Tight stop below the EQL (but not exactly at it)</li>
+                    <li>Target: Premium zone or next resistance</li>
+                    <li><strong>Special note:</strong> Price may wick below EQL first (stop hunt), then bounce. Be patient.</li>
+                </ol>
+            </div>
+
+            <h3>Scenario 2: CHoCH Appears</h3>
+            <div class="warning-box">
+                <strong>What you see:</strong>
+                <ul>
+                    <li>A CHoCH label appears on the chart</li>
+                    <li>Market structure is breaking</li>
+                </ul>
+                <strong>What it means:</strong> The trend is changing<br><br>
+                <strong>How to trade:</strong>
+                <ol>
+                    <li><strong>IMMEDIATELY:</strong> Close any trades against the CHoCH direction</li>
+                    <li><strong>WAIT:</strong> Don't rush into the new direction</li>
+                    <li><strong>CONFIRM:</strong> Wait for a BOS in the new direction</li>
+                    <li><strong>THEN:</strong> Look for pullback entries in the new trend direction</li>
+                </ol>
+            </div>
+
+            <h3>Scenario 3: Price Stuck in Equilibrium</h3>
+            <div class="info-box">
+                <strong>What you see:</strong>
+                <ul>
+                    <li>Price is in the gray middle zone</li>
+                    <li>Bouncing around, no clear direction</li>
+                </ul>
+                <strong>What it means:</strong> No edge; market is balanced<br><br>
+                <strong>How to trade:</strong>
+                <ol>
+                    <li><strong>DO NOT TRADE</strong></li>
+                    <li>Wait for price to move to premium or discount</li>
+                    <li>Use this time to analyze and plan</li>
+                    <li>Set alerts at premium and discount levels</li>
+                </ol>
+                <p><strong>Analogy:</strong> You're at a crossroads with no street signs. You wouldn't guess which way to go - you'd wait for a clear signal. Same here.</p>
+            </div>
+
+            <h3>Scenario 4: Multiple Order Blocks Stacked</h3>
+            <div class="success-box">
+                <strong>What you see:</strong>
+                <ul>
+                    <li>Several order blocks clustered together</li>
+                    <li>Like layers of a cake</li>
+                </ul>
+                <strong>What it means:</strong> Strong institutional zone<br><br>
+                <strong>How to trade:</strong>
+                <ol>
+                    <li><strong>Strongest setup:</strong> Enter at the FIRST order block price hits</li>
+                    <li>If that breaks, the next order block is your backup</li>
+                    <li>Place stop beyond ALL order blocks</li>
+                    <li>This is a "last line of defense" zone - very powerful</li>
+                </ol>
+            </div>
+
+            <h3>Scenario 5: Order Block Break</h3>
+            <div class="danger-box">
+                <strong>What you see:</strong>
+                <ul>
+                    <li>Price closes through an order block you were watching</li>
+                    <li>The order block is now "broken"</li>
+                </ul>
+                <strong>What it means:</strong> That order block is dead; no longer valid<br><br>
+                <strong>How to trade:</strong>
+                <ol>
+                    <li><strong>If you're in a trade:</strong> Exit immediately (if it's your stop level)</li>
+                    <li><strong>If you're waiting to enter:</strong> Scratch that plan</li>
+                    <li><strong>New opportunity:</strong> The broken order block becomes a target for the opposite direction
+                        <ul>
+                            <li>Broken bullish OB → Now resistance for shorts</li>
+                            <li>Broken bearish OB → Now support for longs</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h3>Scenario 6: Fair Value Gap + Order Block Overlap</h3>
+            <div class="success-box">
+                <strong>What you see:</strong>
+                <ul>
+                    <li>An FVG box overlapping with an order block</li>
+                    <li>Double confluence</li>
+                </ul>
+                <strong>What it means:</strong> Premium setup - institutions accumulated here twice<br><br>
+                <strong>How to trade:</strong>
+                <ol>
+                    <li>This is an "A+ setup"</li>
+                    <li>Enter when price touches this zone</li>
+                    <li>Can use slightly wider stop (more room given the confidence)</li>
+                    <li>Often results in explosive moves</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Part 4: Practice -->
+        <section id="practice">
+            <h2>Part 4: Practice Exercises</h2>
+
+            <h3>Exercise 1: Analyzing a Setup</h3>
+            
+            <div class="example">
+                <strong>Question:</strong> Based on the Tesla chart at $456, what should you do?<br><br>
+                <strong>Analysis:</strong><br>
+                1. <strong>Zone:</strong> Price is between discount and equilibrium - slightly high<br>
+                2. <strong>Structure:</strong> Bullish CHoCH appeared, then bullish momentum confirmed<br>
+                3. <strong>Order Block:</strong> Blue order block at $440-443 (below current price)<br>
+                4. <strong>Confluence:</strong> EQL at $440 + Order block + Discount zone<br>
+                5. <strong>Current price:</strong> $456 - extended from order block<br><br>
+                <strong>Recommendation: WAIT</strong>
+                <ul>
+                    <li>Don't chase here</li>
+                    <li>Price has moved too far from the order block</li>
+                    <li>Risk/reward is poor ($456 entry with $437 stop = $19 risk)</li>
+                    <li><strong>Wait for pullback</strong> to $448-450 area, or</li>
+                    <li><strong>Wait for breakout</strong> above $460 with confirmation</li>
+                </ul>
+            </div>
+
+            <h3>Exercise 2: What If Tesla Drops to $445 Tomorrow?</h3>
+
+            <div class="trade-setup">
+                <h4 style="color: white;">Your Action Plan:</h4>
+                <div class="checklist">
+                    <div class="checklist-item">✅ Check if it's touching the blue order block - YES</div>
+                    <div class="checklist-item">✅ Check if it's in discount zone - YES</div>
+                    <div class="checklist-item">✅ Check structure - Still bullish after CHoCH</div>
+                    <div class="checklist-item">✅ Confluence - Order block + Discount + EQL below</div>
+                    <div class="checklist-item">✅ Risk/Reward - Entry $445, Stop $437, Target $465 = 1:2.5</div>
+                </div>
+
+                <h4 style="color: white;">Trade Plan:</h4>
+                <div class="checklist">
+                    <p style="color: #2c3e50;"><strong>Entry:</strong> $445 (market order or limit)</p>
+                    <p style="color: #2c3e50;"><strong>Stop:</strong> $437 (below order block and EQL)</p>
+                    <p style="color: #2c3e50;"><strong>Target 1:</strong> $456 (current resistance) - take 30%</p>
+                    <p style="color: #2c3e50;"><strong>Target 2:</strong> $465 (premium zone) - take 40%</p>
+                    <p style="color: #2c3e50;"><strong>Target 3:</strong> $470+ (if momentum continues) - take remaining 30%</p>
+                    <p style="color: #2c3e50;"><strong>Position Size:</strong> Risk $800 max (1% of account) ÷ $8 stop = 100 shares</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part 5: Advanced Tips -->
+        <section id="advanced">
+            <h2>Part 5: Advanced Tips</h2>
+
+            <div class="info-box">
+                <h4>Tip 1: Time Frames Matter</h4>
+                <ul>
+                    <li>This indicator works on ALL timeframes</li>
+                    <li><strong>Higher timeframe structure always wins</strong></li>
+                    <li>Example: If daily chart shows bearish structure, don't force longs on 1-hour chart</li>
+                    <li><strong>Best practice:</strong> Check daily for overall bias, then use hourly/15-min for entries</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>Tip 2: Volume Confirmation</h4>
+                <ul>
+                    <li>Strong moves breaking structure should have increased volume</li>
+                    <li>Low volume breakouts are suspect (likely to fail)</li>
+                    <li>Look for volume picking up with bullish/bearish moves - good sign</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h4>Tip 3: The "Weak High/Low" Secret</h4>
+                <ul>
+                    <li>These labels are gold</li>
+                    <li>"Weak High" means: don't expect it to hold</li>
+                    <li><strong>Strategy:</strong> If long, take profits BEFORE weak highs</li>
+                    <li>If short, enter AFTER weak highs fail</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>Tip 4: Market Context</h4>
+                <ul>
+                    <li>Smart Money Concepts work best in trending markets</li>
+                    <li>In choppy, range-bound markets, reduce position size</li>
+                    <li>During major news events, step aside (institutional behavior changes)</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h4>Tip 5: Patience is Profit</h4>
+                <ul>
+                    <li>The indicator gives you 2-3 high-quality setups per week per stock</li>
+                    <li>Don't force trades</li>
+                    <li>Wait for the setup to come to you</li>
+                    <li><strong>Remember:</strong> Missing a trade is better than taking a bad trade</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Part 6: Common Mistakes -->
+        <section id="mistakes">
+            <h2>Part 6: Common Mistakes to Avoid</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>❌ Mistake</th>
+                        <th>✅ Correct Approach</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Trading in Equilibrium<br>"Price is in the middle, I'll guess which way it goes"</td>
+                        <td>Wait for price to reach premium or discount</td>
+                    </tr>
+                    <tr>
+                        <td>Ignoring CHoCH<br>"I'll keep holding this long even though CHoCH appeared"</td>
+                        <td>Respect the CHoCH, exit or flip your bias</td>
+                    </tr>
+                    <tr>
+                        <td>Chasing Price<br>"Order block is at $440 but I'll buy at $456 because I'm bullish"</td>
+                        <td>Wait for pullback to the order block</td>
+                    </tr>
+                    <tr>
+                        <td>Overleveraging<br>"This setup is so good, I'll risk 10% of my account"</td>
+                        <td>Never risk more than 1-2% per trade</td>
+                    </tr>
+                    <tr>
+                        <td>Stop Hunting Yourself<br>Placing stop exactly at EQL/EQH levels</td>
+                        <td>Place stops 1-2% beyond these liquidity zones</td>
+                    </tr>
+                    <tr>
+                        <td>Forgetting Risk/Reward<br>Taking trades with less than 1:2 risk/reward</td>
+                        <td>Only trade setups offering at least 1:2, preferably 1:3+</td>
+                    </tr>
+                    <tr>
+                        <td>Analysis Paralysis<br>"I need every single indicator to align perfectly"</td>
+                        <td>Use the 5-step checklist; if 4/5 align, it's enough</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Part 7: Trading Routine -->
+        <section id="routine">
+            <h2>Part 7: Your Trading Routine</h2>
+
+            <h3>Daily Routine (15 minutes)</h3>
+
+            <div class="example">
+                <strong>Morning (Before Market Open):</strong><br>
+                1. Check overnight structure changes<br>
+                2. Identify which stocks are near order blocks<br>
+                3. Set price alerts at key order block levels<br>
+                4. Review any open positions
+            </div>
+
+            <div class="example">
+                <strong>During Market Hours:</strong><br>
+                1. Wait for alerts to trigger<br>
+                2. When alert hits, run the 5-step checklist<br>
+                3. Execute trade if all criteria met<br>
+                4. Set stops and targets immediately
+            </div>
+
+            <div class="example">
+                <strong>Evening (After Close):</strong><br>
+                1. Review your trades<br>
+                2. Update your trading journal<br>
+                3. Screenshot charts with notes<br>
+                4. Plan for tomorrow
+            </div>
+
+            <h3>Weekly Routine (30 minutes)</h3>
+
+            <div class="example">
+                <strong>Every Sunday:</strong><br>
+                1. Review weekly chart structure for your watchlist<br>
+                2. Identify major order blocks on weekly timeframe<br>
+                3. Determine overall bias (bullish/bearish) for each stock<br>
+                4. Create trading plan for the week
+            </div>
+        </section>
+
+        <!-- Part 8: Cheat Sheet -->
+        <section id="cheatsheet">
+            <h2>Part 8: Quick Reference Guide</h2>
+
+            <h3>The Ultimate Cheat Sheet</h3>
+
+            <div class="trade-setup">
+                <h4 style="color: white;">🟢 LONG Trade Checklist</h4>
+                <div class="checklist">
+                    <div class="checklist-item">Price in DISCOUNT zone</div>
+                    <div class="checklist-item">Bullish CHoCH or BOS present</div>
+                    <div class="checklist-item">At or near BLUE order block</div>
+                    <div class="checklist-item">Above or near EQL</div>
+                    <div class="checklist-item">Risk/Reward minimum 1:2</div>
+                    <div class="checklist-item">Position size = 1-2% account risk</div>
+                </div>
+            </div>
+
+            <div class="trade-setup" style="background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);">
+                <h4 style="color: white;">🔴 SHORT Trade Checklist</h4>
+                <div class="checklist">
+                    <div class="checklist-item">Price in PREMIUM zone</div>
+                    <div class="checklist-item">Bearish CHoCH or BOS present</div>
+                    <div class="checklist-item">At or near RED order block</div>
+                    <div class="checklist-item">Below or near EQH</div>
+                    <div class="checklist-item">Risk/Reward minimum 1:2</div>
+                    <div class="checklist-item">Position size = 1-2% account risk</div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ DO NOT TRADE When:</h4>
+                <div class="checklist-item">Price in equilibrium zone</div>
+                <div class="checklist-item">Structure is unclear (no recent BOS/CHoCH)</div>
+                <div class="checklist-item">No order block nearby</div>
+                <div class="checklist-item">Risk/Reward less than 1:2</div>
+                <div class="checklist-item">Major news event pending</div>
+                <div class="checklist-item">You've had 3 losses in a row</div>
+            </div>
+
+            <h3>Final Thoughts</h3>
+
+            <div class="success-box">
+                <p>Trading with Smart Money Concepts is about <strong>patience and precision</strong>:</p>
+                <ol>
+                    <li><strong>Wait</strong> for price to come to institutional levels (order blocks)</li>
+                    <li><strong>Confirm</strong> with structure (BOS/CHoCH)</li>
+                    <li><strong>Enter</strong> with proper risk management</li>
+                    <li><strong>Exit</strong> according to plan</li>
+                </ol>
+
+                <p><strong>The indicator does the heavy lifting</strong> - showing you where institutions are positioned. Your job is simply to:</p>
+                <ul>
+                    <li>Follow the rules</li>
+                    <li>Be patient</li>
+                    <li>Manage risk</li>
+                    <li>Let the trades come to you</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Remember:</strong> You don't need to trade every day. You need to trade the RIGHT setups. Quality over quantity.</p>
+                <p>Start with paper trading until you can consistently identify setups. Then trade small size until you're profitable. Then gradually increase size.</p>
+                <p>The institutions leave footprints every single day. This indicator shows you those footprints. Now you just need to follow them.</p>
+            </div>
+
+            <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-bg) 100%); color: white; border-radius: 10px; margin-top: 2rem;">
+                <h3 style="color: white; border: none;">Good luck, and trade smart! 📈</h3>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Smart Money Concepts Trading Tutorial</p>
+        <p>For educational purposes only. Trading involves risk.</p>
+    </footer>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // Hide back to top button initially
+        document.querySelector('.back-to-top').style.display = 'none';
+    </script>
+</body>
+</html>
