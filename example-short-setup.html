@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Short Setup Example - Smart Money Concepts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        header {
+            background: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav-bar {
+            background: #2c3e50;
+            padding: 15px 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .nav-bar a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
+        }
+
+        .chart-container {
+            padding: 30px;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .chart-wrapper {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            height: 700px;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .sidebar h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #e74c3c;
+        }
+
+        .sidebar h3 {
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 5px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .checklist-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(5px);
+        }
+
+        .check-icon {
+            color: #e74c3c;
+            font-size: 1.5rem;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .trade-details {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .trade-details h3 {
+            color: white;
+            border-bottom: 2px solid white;
+        }
+
+        .trade-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .trade-row:last-child {
+            border-bottom: none;
+        }
+
+        .trade-label {
+            font-weight: 600;
+        }
+
+        .trade-value {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .legend {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .alert-box {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .confluence-score {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .score-label {
+            font-size: 1.2rem;
+            color: white;
+            margin-top: 5px;
+        }
+
+        .interactive-note {
+            background: #f39c12;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                max-height: none;
+            }
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📉 Perfect Short Setup Example</h1>
+            <p class="subtitle">All 5 Criteria Met - High Probability Sell Trade</p>
+        </header>
+
+        <div class="nav-bar">
+            <a href="index.html">← Back to Tutorial</a>
+            <a href="example-long-setup.html">View Long Setup Example</a>
+        </div>
+
+        <div class="main-content">
+            <div class="chart-container">
+                <div class="interactive-note">
+                    🖱️ Hover over elements on the chart to see details
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="tradingChart"></canvas>
+                    <div id="tooltip" class="tooltip"></div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h2>✅ Setup Analysis</h2>
+
+                <div class="confluence-score">
+                    <div class="score-number">5/5</div>
+                    <div class="score-label">PERFECT CONFLUENCE</div>
+                </div>
+
+                <h3>Step 1: Zone Check ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Price in PREMIUM ZONE</strong><br>
+                        Current price ($468) is in the top third of the range, indicating an "expensive" area where institutions distribute and sell.
+                    </div>
+                </div>
+
+                <h3>Step 2: Structure Check ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Bearish CHoCH Present</strong><br>
+                        Market structure changed from bullish to bearish. Followed by a Bearish BOS confirming the new downtrend.
+                    </div>
+                </div>
+
+                <h3>Step 3: Order Block ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Red Order Block at Entry</strong><br>
+                        Price has rallied back to the bearish order block ($467-470) where institutions previously sold heavily.
+                    </div>
+                </div>
+
+                <h3>Step 4: Confluence ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>EQH + FVG + Order Block</strong><br>
+                        Triple confluence: Equal Highs at $472, Fair Value Gap overlapping order block, and premium zone. This is an A+ short setup.
+                    </div>
+                </div>
+
+                <h3>Step 5: Risk/Reward ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Excellent 1:3.4 Ratio</strong><br>
+                        Risk: $5 (entry to stop)<br>
+                        Reward: $17+ (entry to target)<br>
+                        This exceeds the minimum 1:2 requirement.
+                    </div>
+                </div>
+
+                <div class="trade-details">
+                    <h3>📋 Trade Plan</h3>
+                    <div class="trade-row">
+                        <span class="trade-label">Entry Price:</span>
+                        <span class="trade-value">$468.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Stop Loss:</span>
+                        <span class="trade-value">$473.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Target 1 (30%):</span>
+                        <span class="trade-value">$460.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Target 2 (40%):</span>
+                        <span class="trade-value">$453.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Target 3 (30%):</span>
+                        <span class="trade-value">$445.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Risk Amount:</span>
+                        <span class="trade-value">$5 per share</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Potential Reward:</span>
+                        <span class="trade-value">$15-23 per share</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Position Size (1%):</span>
+                        <span class="trade-value">40 shares</span>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <h3 style="color: white; border-color: white;">Chart Legend</h3>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(255, 230, 230, 0.7);"></div>
+                        <span>Premium Zone (SELL)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(245, 245, 245, 0.5);"></div>
+                        <span>Equilibrium Zone</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(230, 243, 255, 0.7);"></div>
+                        <span>Discount Zone (BUY)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(231, 76, 60, 0.3); border: 2px solid #e74c3c;"></div>
+                        <span>Bearish Order Block</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(231, 76, 60, 0.3);"></div>
+                        <span>Fair Value Gap (FVG)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #2ecc71;"></div>
+                        <span>Bullish Candle</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e74c3c;"></div>
+                        <span>Bearish Candle</span>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    🎯 TAKE THIS TRADE!<br>
+                    High Probability Short Setup
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="short-setup-chart.js"></script>
+</body>
+</html>

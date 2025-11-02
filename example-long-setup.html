@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Long Setup Example - Smart Money Concepts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 0;
+        }
+
+        .chart-container {
+            padding: 30px;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .chart-wrapper {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            height: 700px;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .sidebar h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+
+        .sidebar h3 {
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #2ecc71;
+            border-bottom: 2px solid #2ecc71;
+            padding-bottom: 5px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .checklist-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateX(5px);
+        }
+
+        .check-icon {
+            color: #2ecc71;
+            font-size: 1.5rem;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .trade-details {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .trade-details h3 {
+            color: white;
+            border-bottom: 2px solid white;
+        }
+
+        .trade-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .trade-row:last-child {
+            border-bottom: none;
+        }
+
+        .trade-label {
+            font-weight: 600;
+        }
+
+        .trade-value {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .legend {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .alert-box {
+            background: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .confluence-score {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .score-label {
+            font-size: 1.2rem;
+            color: white;
+            margin-top: 5px;
+        }
+
+        .interactive-note {
+            background: #f39c12;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                max-height: none;
+            }
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .price-label {
+            position: absolute;
+            background: #2c3e50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Perfect Long Setup Example</h1>
+            <p class="subtitle">All 5 Criteria Met - High Probability Trade</p>
+        </header>
+
+        <div style="background-color: #3498db; padding: 15px 0;">
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; padding: 0 20px;">
+                <a href="index.html" style="background: white; color: #3498db; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.95rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    📚 Main Tutorial
+                </a>
+                <a href="example-long-setup.html" style="background: #27ae60; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.95rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 3px solid white;">
+                    📈 Long Setup (Current)
+                </a>
+                <a href="example-short-setup.html" style="background: #e74c3c; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.95rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    📉 Short Setup
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="chart-container">
+                <div class="interactive-note">
+                    🖱️ Hover over elements on the chart to see details
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="tradingChart"></canvas>
+                    <div id="tooltip" class="tooltip"></div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h2>✅ Setup Analysis</h2>
+
+                <div class="confluence-score">
+                    <div class="score-number">5/5</div>
+                    <div class="score-label">PERFECT CONFLUENCE</div>
+                </div>
+
+                <h3>Step 1: Zone Check ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Price in DISCOUNT ZONE</strong><br>
+                        Current price ($442) is in the bottom third of the range, indicating a "cheap" area where institutions accumulate.
+                    </div>
+                </div>
+
+                <h3>Step 2: Structure Check ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Bullish CHoCH Present</strong><br>
+                        Market structure changed from bearish to bullish. Followed by a Bullish BOS confirming the new uptrend.
+                    </div>
+                </div>
+
+                <h3>Step 3: Order Block ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Blue Order Block at Entry</strong><br>
+                        Price has pulled back to the bullish order block ($440-443) where institutions previously bought heavily.
+                    </div>
+                </div>
+
+                <h3>Step 4: Confluence ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>EQL + FVG + Order Block</strong><br>
+                        Triple confluence: Equal Lows at $438, Fair Value Gap overlapping order block, and discount zone. This is an A+ setup.
+                    </div>
+                </div>
+
+                <h3>Step 5: Risk/Reward ✅</h3>
+                <div class="checklist-item">
+                    <span class="check-icon">✓</span>
+                    <div>
+                        <strong>Excellent 1:3 Ratio</strong><br>
+                        Risk: $5 (entry to stop)<br>
+                        Reward: $15+ (entry to target)<br>
+                        This exceeds the minimum 1:2 requirement.
+                    </div>
+                </div>
+
+                <div class="trade-details">
+                    <h3>📋 Trade Plan</h3>
+                    <div class="trade-row">
+                        <span class="trade-label">Entry Price:</span>
+                        <span class="trade-value">$442.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Stop Loss:</span>
+                        <span class="trade-value">$437.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Target 1 (30%):</span>
+                        <span class="trade-value">$450.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Target 2 (40%):</span>
+                        <span class="trade-value">$457.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Target 3 (30%):</span>
+                        <span class="trade-value">$465.00</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Risk Amount:</span>
+                        <span class="trade-value">$5 per share</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Potential Reward:</span>
+                        <span class="trade-value">$15-23 per share</span>
+                    </div>
+                    <div class="trade-row">
+                        <span class="trade-label">Position Size (1%):</span>
+                        <span class="trade-value">40 shares</span>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <h3 style="color: white; border-color: white;">Chart Legend</h3>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(230, 243, 255, 0.7);"></div>
+                        <span>Discount Zone (BUY)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(245, 245, 245, 0.5);"></div>
+                        <span>Equilibrium Zone</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(255, 230, 230, 0.7);"></div>
+                        <span>Premium Zone (SELL)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(52, 152, 219, 0.3); border: 2px solid #3498db;"></div>
+                        <span>Bullish Order Block</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(46, 204, 113, 0.3);"></div>
+                        <span>Fair Value Gap (FVG)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #2ecc71;"></div>
+                        <span>Bullish Candle</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e74c3c;"></div>
+                        <span>Bearish Candle</span>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    🎯 TAKE THIS TRADE!<br>
+                    High Probability Setup
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('tradingChart');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+
+        // Set canvas size
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            drawChart();
+        });
+
+        // Price data - creating a perfect long setup scenario
+        const priceData = [
+            // Initial downtrend
+            { open: 465, high: 468, low: 462, close: 463, label: '' },
+            { open: 463, high: 465, low: 460, close: 461, label: '' },
+            { open: 461, high: 463, low: 458, close: 459, label: '' },
+            { open: 459, high: 461, low: 456, close: 457, label: '' },
+            { open: 457, high: 459, low: 454, close: 455, label: '' },
+            { open: 455, high: 457, low: 452, close: 453, label: 'BOS' },
+            { open: 453, high: 455, low: 450, close: 451, label: '' },
+            { open: 451, high: 453, low: 448, close: 449, label: '' },
+            { open: 449, high: 451, low: 446, close: 447, label: '' },
+            { open: 447, high: 449, low: 444, close: 445, label: '' },
+            { open: 445, high: 447, low: 442, close: 443, label: '' },
+            { open: 443, high: 445, low: 440, close: 441, label: '' },
+            { open: 441, high: 443, low: 438, close: 439, label: 'EQL' }, // Equal low 1
+            { open: 439, high: 442, low: 437, close: 440, label: '' },
+            { open: 440, high: 443, low: 438, close: 438.5, label: 'EQL' }, // Equal low 2
+            
+            // Bullish reversal (CHoCH)
+            { open: 438.5, high: 445, low: 437, close: 444, label: '' }, // Order block candle
+            { open: 444, high: 454, low: 443, close: 452, label: 'CHoCH' }, // Change of character
+            { open: 452, high: 458, low: 450, close: 456, label: '' },
+            { open: 456, high: 462, low: 454, close: 460, label: 'BOS' }, // Break of structure
+            { open: 460, high: 465, low: 458, close: 463, label: '' },
+            
+            // Pullback to order block (ENTRY ZONE)
+            { open: 463, high: 465, low: 460, close: 461, label: '' },
+            { open: 461, high: 463, low: 457, close: 458, label: '' },
+            { open: 458, high: 460, low: 454, close: 455, label: '' },
+            { open: 455, high: 457, low: 451, close: 452, label: '' },
+            { open: 452, high: 454, low: 448, close: 449, label: '' },
+            { open: 449, high: 451, low: 445, close: 446, label: '' },
+            { open: 446, high: 448, low: 442, close: 443, label: '💰 ENTRY' }, // Entry point
+            
+            // Future price projection (dotted)
+            { open: 443, high: 446, low: 441, close: 445, label: '', projected: true },
+            { open: 445, high: 449, low: 443, close: 448, label: '', projected: true },
+            { open: 448, high: 453, low: 446, close: 451, label: 'T1', projected: true },
+            { open: 451, high: 456, low: 449, close: 454, label: '', projected: true },
+            { open: 454, high: 459, low: 452, close: 457, label: 'T2', projected: true },
+            { open: 457, high: 462, low: 455, close: 460, label: '', projected: true },
+            { open: 460, high: 466, low: 458, close: 464, label: 'T3', projected: true },
+        ];
+
+        const chartPadding = { top: 40, right: 80, bottom: 40, left: 60 };
+        
+        function drawChart() {
+            const width = canvas.width / window.devicePixelRatio;
+            const height = canvas.height / window.devicePixelRatio;
+            
+            ctx.clearRect(0, 0, width, height);
+
+            // Calculate price range
+            const allPrices = priceData.flatMap(d => [d.high, d.low]);
+            const maxPrice = Math.max(...allPrices);
+            const minPrice = Math.min(...allPrices);
+            const priceRange = maxPrice - minPrice;
+            
+            // Add padding to price range
+            const paddedMax = maxPrice + priceRange * 0.1;
+            const paddedMin = minPrice - priceRange * 0.1;
+            const paddedRange = paddedMax - paddedMin;
+
+            const chartWidth = width - chartPadding.left - chartPadding.right;
+            const chartHeight = height - chartPadding.top - chartPadding.bottom;
+            
+            const candleWidth = chartWidth / (priceData.length + 2);
+            const candleSpacing = candleWidth * 0.3;
+
+            // Helper functions
+            function priceToY(price) {
+                return chartPadding.top + (paddedMax - price) / paddedRange * chartHeight;
+            }
+
+            function indexToX(index) {
+                return chartPadding.left + (index + 1) * candleWidth;
+            }
+
+            // Draw Premium/Equilibrium/Discount zones
+            const discountTop = priceToY(paddedMin + paddedRange * 0.33);
+            const equilibriumTop = priceToY(paddedMin + paddedRange * 0.67);
+            
+            // Premium zone (top)
+            ctx.fillStyle = 'rgba(255, 230, 230, 0.7)';
+            ctx.fillRect(chartPadding.left, chartPadding.top, chartWidth, equilibriumTop - chartPadding.top);
+            ctx.fillStyle = 'rgba(231, 76, 60, 0.8)';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('PREMIUM ZONE', chartPadding.left + 10, chartPadding.top + 20);
+
+            // Equilibrium zone (middle)
+            ctx.fillStyle = 'rgba(245, 245, 245, 0.5)';
+            ctx.fillRect(chartPadding.left, equilibriumTop, chartWidth, discountTop - equilibriumTop);
+            ctx.fillStyle = 'rgba(149, 165, 166, 0.8)';
+            ctx.fillText('EQUILIBRIUM', chartPadding.left + 10, equilibriumTop + 20);
+
+            // Discount zone (bottom)
+            ctx.fillStyle = 'rgba(230, 243, 255, 0.7)';
+            ctx.fillRect(chartPadding.left, discountTop, chartWidth, chartPadding.top + chartHeight - discountTop);
+            ctx.fillStyle = 'rgba(52, 152, 219, 0.8)';
+            ctx.fillText('DISCOUNT ZONE', chartPadding.left + 10, discountTop + 20);
+
+            // Draw Order Block (bullish)
+            const orderBlockStart = 15; // Index where order block starts
+            const orderBlockEnd = 16; // Index where strong move begins
+            const orderBlockLow = priceData[orderBlockStart].low;
+            const orderBlockHigh = priceData[orderBlockStart].high;
+            
+            ctx.fillStyle = 'rgba(52, 152, 219, 0.3)';
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 2;
+            const obLeft = indexToX(orderBlockStart);
+            const obRight = width - chartPadding.right;
+            const obTop = priceToY(orderBlockHigh);
+            const obBottom = priceToY(orderBlockLow);
+            ctx.fillRect(obLeft, obTop, obRight - obLeft, obBottom - obTop);
+            ctx.strokeRect(obLeft, obTop, obRight - obLeft, obBottom - obTop);
+
+            // Label Order Block
+            ctx.fillStyle = '#3498db';
+            ctx.font = 'bold 12px Arial';
+            ctx.fillText('ORDER BLOCK', obLeft + 10, obTop + 15);
+
+            // Draw Fair Value Gap (overlapping order block)
+            const fvgTop = priceToY(444);
+            const fvgBottom = priceToY(440);
+            ctx.fillStyle = 'rgba(46, 204, 113, 0.3)';
+            ctx.fillRect(indexToX(15), fvgTop, indexToX(26) - indexToX(15), fvgBottom - fvgTop);
+            ctx.fillStyle = '#27ae60';
+            ctx.font = 'bold 11px Arial';
+            ctx.fillText('FVG', indexToX(15) + 5, fvgTop + 15);
+
+            // Draw EQL line
+            const eqlPrice = 438;
+            const eqlY = priceToY(eqlPrice);
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(indexToX(12), eqlY);
+            ctx.lineTo(indexToX(14), eqlY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#3498db';
+            ctx.font = 'bold 11px Arial';
+            ctx.fillText('EQL', indexToX(12) - 25, eqlY + 4);
+
+            // Draw entry line
+            const entryPrice = 442;
+            const entryY = priceToY(entryPrice);
+            ctx.strokeStyle = '#f39c12';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(chartPadding.left, entryY);
+            ctx.lineTo(width - chartPadding.right, entryY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw stop loss line
+            const stopPrice = 437;
+            const stopY = priceToY(stopPrice);
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(chartPadding.left, stopY);
+            ctx.lineTo(width - chartPadding.right, stopY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw target lines
+            const targets = [
+                { price: 450, label: 'T1', color: '#2ecc71' },
+                { price: 457, label: 'T2', color: '#27ae60' },
+                { price: 465, label: 'T3', color: '#229954' }
+            ];
+
+            targets.forEach(target => {
+                const targetY = priceToY(target.price);
+                ctx.strokeStyle = target.color;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 4]);
+                ctx.beginPath();
+                ctx.moveTo(indexToX(26), targetY);
+                ctx.lineTo(width - chartPadding.right, targetY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            });
+
+            // Draw candlesticks
+            priceData.forEach((candle, index) => {
+                const x = indexToX(index);
+                const openY = priceToY(candle.open);
+                const closeY = priceToY(candle.close);
+                const highY = priceToY(candle.high);
+                const lowY = priceToY(candle.low);
+
+                const isBullish = candle.close > candle.open;
+                
+                if (candle.projected) {
+                    ctx.globalAlpha = 0.4;
+                }
+
+                // Draw wick
+                ctx.strokeStyle = isBullish ? '#2ecc71' : '#e74c3c';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(x, highY);
+                ctx.lineTo(x, lowY);
+                ctx.stroke();
+
+                // Draw body
+                ctx.fillStyle = isBullish ? '#2ecc71' : '#e74c3c';
+                const bodyHeight = Math.abs(closeY - openY);
+                const bodyTop = Math.min(openY, closeY);
+                ctx.fillRect(x - candleSpacing, bodyTop, candleSpacing * 2, Math.max(bodyHeight, 1));
+
+                // Draw labels
+                if (candle.label) {
+                    ctx.globalAlpha = 1;
+                    ctx.fillStyle = '#2c3e50';
+                    ctx.font = 'bold 10px Arial';
+                    
+                    if (candle.label === 'CHoCH') {
+                        ctx.fillStyle = '#27ae60';
+                        ctx.fillText(candle.label, x - 15, highY - 10);
+                    } else if (candle.label === 'BOS') {
+                        ctx.fillStyle = '#27ae60';
+                        ctx.fillText(candle.label, x - 10, highY - 10);
+                    } else if (candle.label === 'EQL') {
+                        ctx.fillStyle = '#3498db';
+                        ctx.fillText('●', x - 3, lowY + 15);
+                    } else if (candle.label === '💰 ENTRY') {
+                        ctx.fillStyle = '#f39c12';
+                        ctx.font = 'bold 12px Arial';
+                        ctx.fillText(candle.label, x - 20, closeY - 15);
+                    } else if (candle.label.startsWith('T')) {
+                        ctx.fillStyle = '#2ecc71';
+                        ctx.fillText(candle.label, x - 8, closeY - 10);
+                    }
+                }
+
+                ctx.globalAlpha = 1;
+            });
+
+            // Draw price labels on right axis
+            const priceLabels = [
+                { price: entryPrice, label: 'Entry $442', color: '#f39c12' },
+                { price: stopPrice, label: 'Stop $437', color: '#e74c3c' },
+                { price: 450, label: 'T1 $450', color: '#2ecc71' },
+                { price: 457, label: 'T2 $457', color: '#27ae60' },
+                { price: 465, label: 'T3 $465', color: '#229954' },
+            ];
+
+            priceLabels.forEach(item => {
+                const y = priceToY(item.price);
+                ctx.fillStyle = item.color;
+                ctx.font = 'bold 11px Arial';
+                ctx.fillText(item.label, width - chartPadding.right + 5, y + 4);
+            });
+
+            // Draw axis
+            ctx.strokeStyle = '#95a5a6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(chartPadding.left, chartPadding.top);
+            ctx.lineTo(chartPadding.left, height - chartPadding.bottom);
+            ctx.lineTo(width - chartPadding.right, height - chartPadding.bottom);
+            ctx.stroke();
+        }
+
+        // Interactive hover
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const width = canvas.width / window.devicePixelRatio;
+            const chartWidth = width - chartPadding.left - chartPadding.right;
+            const candleWidth = chartWidth / (priceData.length + 2);
+
+            // Check if hovering over a candle
+            const index = Math.floor((x - chartPadding.left) / candleWidth) - 1;
+            
+            if (index >= 0 && index < priceData.length) {
+                const candle = priceData[index];
+                tooltip.style.display = 'block';
+                tooltip.style.left = (e.clientX + 15) + 'px';
+                tooltip.style.top = (e.clientY + 15) + 'px';
+                tooltip.innerHTML = `
+                    <strong>${candle.projected ? 'Projected' : 'Historical'}</strong><br>
+                    Open: $${candle.open.toFixed(2)}<br>
+                    High: $${candle.high.toFixed(2)}<br>
+                    Low: $${candle.low.toFixed(2)}<br>
+                    Close: $${candle.close.toFixed(2)}
+                    ${candle.label ? '<br><strong>' + candle.label + '</strong>' : ''}
+                `;
+            } else {
+                tooltip.style.display = 'none';
+            }
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
+        });
+
+        // Initial draw
+        drawChart();
+    </script>
+</body>
+</html>
