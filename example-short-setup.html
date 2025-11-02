@@ -416,6 +416,333 @@
         </div>
     </div>
 
-    <script src="short-setup-chart.js"></script>
+    <script>
+        const canvas = document.getElementById('tradingChart');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+
+        // Set canvas size
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            drawChart();
+        });
+
+        // Price data - creating a perfect short setup scenario
+        const priceData = [
+            // Initial uptrend
+            { open: 445, high: 447, low: 443, close: 446, label: '' },
+            { open: 446, high: 449, low: 445, close: 448, label: '' },
+            { open: 448, high: 451, low: 447, close: 450, label: '' },
+            { open: 450, high: 453, low: 449, close: 452, label: '' },
+            { open: 452, high: 455, low: 451, close: 454, label: '' },
+            { open: 454, high: 457, low: 453, close: 456, label: 'BOS' },
+            { open: 456, high: 459, low: 455, close: 458, label: '' },
+            { open: 458, high: 461, low: 457, close: 460, label: '' },
+            { open: 460, high: 463, low: 459, close: 462, label: '' },
+            { open: 462, high: 465, low: 461, close: 464, label: '' },
+            { open: 464, high: 467, low: 463, close: 466, label: '' },
+            { open: 466, high: 469, low: 465, close: 468, label: '' },
+            { open: 468, high: 472, low: 467, close: 471, label: 'EQH' },
+            { open: 471, high: 473, low: 469, close: 470, label: '' },
+            { open: 470, high: 472.5, low: 468, close: 471.5, label: 'EQH' },
+            
+            // Bearish reversal (CHoCH)
+            { open: 471.5, high: 473, low: 466, close: 467, label: '' },
+            { open: 467, high: 468, low: 456, close: 458, label: 'CHoCH' },
+            { open: 458, high: 462, low: 452, close: 454, label: '' },
+            { open: 454, high: 456, low: 448, close: 450, label: 'BOS' },
+            { open: 450, high: 452, low: 445, close: 447, label: '' },
+            
+            // Rally back to order block (ENTRY ZONE)
+            { open: 447, high: 450, low: 445, close: 449, label: '' },
+            { open: 449, high: 453, low: 448, close: 452, label: '' },
+            { open: 452, high: 456, low: 451, close: 455, label: '' },
+            { open: 455, high: 459, low: 454, close: 458, label: '' },
+            { open: 458, high: 462, low: 457, close: 461, label: '' },
+            { open: 461, high: 465, low: 460, close: 464, label: '' },
+            { open: 464, high: 469, low: 463, close: 467, label: '💰 ENTRY' },
+            
+            // Future price projection (dotted)
+            { open: 467, high: 469, low: 464, close: 465, label: '', projected: true },
+            { open: 465, high: 467, low: 461, close: 462, label: '', projected: true },
+            { open: 462, high: 464, low: 459, close: 460, label: 'T1', projected: true },
+            { open: 460, high: 462, low: 456, close: 457, label: '', projected: true },
+            { open: 457, high: 459, low: 452, close: 453, label: 'T2', projected: true },
+            { open: 453, high: 455, low: 448, close: 450, label: '', projected: true },
+            { open: 450, high: 452, low: 444, close: 446, label: 'T3', projected: true },
+        ];
+
+        const chartPadding = { top: 40, right: 80, bottom: 40, left: 60 };
+
+        function drawChart() {
+            const width = canvas.width / window.devicePixelRatio;
+            const height = canvas.height / window.devicePixelRatio;
+            
+            ctx.clearRect(0, 0, width, height);
+
+            // Calculate price range
+            const allPrices = priceData.flatMap(d => [d.high, d.low]);
+            const maxPrice = Math.max(...allPrices);
+            const minPrice = Math.min(...allPrices);
+            const priceRange = maxPrice - minPrice;
+            
+            // Add padding to price range
+            const paddedMax = maxPrice + priceRange * 0.1;
+            const paddedMin = minPrice - priceRange * 0.1;
+            const paddedRange = paddedMax - paddedMin;
+
+            const chartWidth = width - chartPadding.left - chartPadding.right;
+            const chartHeight = height - chartPadding.top - chartPadding.bottom;
+            
+            const candleWidth = chartWidth / (priceData.length + 2);
+            const candleSpacing = candleWidth * 0.3;
+
+            // Helper functions
+            function priceToY(price) {
+                return chartPadding.top + (paddedMax - price) / paddedRange * chartHeight;
+            }
+
+            function indexToX(index) {
+                return chartPadding.left + (index + 1) * candleWidth;
+            }
+
+            // Draw Premium/Equilibrium/Discount zones
+            const discountTop = priceToY(paddedMin + paddedRange * 0.33);
+            const equilibriumTop = priceToY(paddedMin + paddedRange * 0.67);
+            
+            // Premium zone (top)
+            ctx.fillStyle = 'rgba(255, 230, 230, 0.7)';
+            ctx.fillRect(chartPadding.left, chartPadding.top, chartWidth, equilibriumTop - chartPadding.top);
+            ctx.fillStyle = 'rgba(231, 76, 60, 0.8)';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('PREMIUM ZONE', chartPadding.left + 10, chartPadding.top + 20);
+
+            // Equilibrium zone (middle)
+            ctx.fillStyle = 'rgba(245, 245, 245, 0.5)';
+            ctx.fillRect(chartPadding.left, equilibriumTop, chartWidth, discountTop - equilibriumTop);
+            ctx.fillStyle = 'rgba(149, 165, 166, 0.8)';
+            ctx.fillText('EQUILIBRIUM', chartPadding.left + 10, equilibriumTop + 20);
+
+            // Discount zone (bottom)
+            ctx.fillStyle = 'rgba(230, 243, 255, 0.7)';
+            ctx.fillRect(chartPadding.left, discountTop, chartWidth, chartPadding.top + chartHeight - discountTop);
+            ctx.fillStyle = 'rgba(52, 152, 219, 0.8)';
+            ctx.fillText('DISCOUNT ZONE', chartPadding.left + 10, discountTop + 20);
+
+            // Draw Order Block (bearish)
+            const orderBlockStart = 15;
+            const orderBlockLow = priceData[orderBlockStart].low;
+            const orderBlockHigh = priceData[orderBlockStart].high;
+            
+            ctx.fillStyle = 'rgba(231, 76, 60, 0.3)';
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            const obLeft = indexToX(orderBlockStart);
+            const obRight = width - chartPadding.right;
+            const obTop = priceToY(orderBlockHigh);
+            const obBottom = priceToY(orderBlockLow);
+            ctx.fillRect(obLeft, obTop, obRight - obLeft, obBottom - obTop);
+            ctx.strokeRect(obLeft, obTop, obRight - obLeft, obBottom - obTop);
+
+            // Label Order Block
+            ctx.fillStyle = '#e74c3c';
+            ctx.font = 'bold 12px Arial';
+            ctx.fillText('ORDER BLOCK', obLeft + 10, obTop + 15);
+
+            // Draw Fair Value Gap
+            const fvgTop = priceToY(470);
+            const fvgBottom = priceToY(466);
+            ctx.fillStyle = 'rgba(231, 76, 60, 0.3)';
+            ctx.fillRect(indexToX(15), fvgTop, indexToX(26) - indexToX(15), fvgBottom - fvgTop);
+            ctx.fillStyle = '#c0392b';
+            ctx.font = 'bold 11px Arial';
+            ctx.fillText('FVG', indexToX(15) + 5, fvgTop + 15);
+
+            // Draw EQH line
+            const eqhPrice = 472;
+            const eqhY = priceToY(eqhPrice);
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(indexToX(12), eqhY);
+            ctx.lineTo(indexToX(14), eqhY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#e74c3c';
+            ctx.font = 'bold 11px Arial';
+            ctx.fillText('EQH', indexToX(12) - 25, eqhY + 4);
+
+            // Draw entry line
+            const entryPrice = 468;
+            const entryY = priceToY(entryPrice);
+            ctx.strokeStyle = '#f39c12';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(chartPadding.left, entryY);
+            ctx.lineTo(width - chartPadding.right, entryY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw stop loss line
+            const stopPrice = 473;
+            const stopY = priceToY(stopPrice);
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(chartPadding.left, stopY);
+            ctx.lineTo(width - chartPadding.right, stopY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw target lines
+            const targets = [
+                { price: 460, label: 'T1', color: '#2ecc71' },
+                { price: 453, label: 'T2', color: '#27ae60' },
+                { price: 445, label: 'T3', color: '#229954' }
+            ];
+
+            targets.forEach(target => {
+                const targetY = priceToY(target.price);
+                ctx.strokeStyle = target.color;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 4]);
+                ctx.beginPath();
+                ctx.moveTo(indexToX(26), targetY);
+                ctx.lineTo(width - chartPadding.right, targetY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            });
+
+            // Draw candlesticks
+            priceData.forEach((candle, index) => {
+                const x = indexToX(index);
+                const openY = priceToY(candle.open);
+                const closeY = priceToY(candle.close);
+                const highY = priceToY(candle.high);
+                const lowY = priceToY(candle.low);
+
+                const isBullish = candle.close > candle.open;
+                
+                if (candle.projected) {
+                    ctx.globalAlpha = 0.4;
+                }
+
+                // Draw wick
+                ctx.strokeStyle = isBullish ? '#2ecc71' : '#e74c3c';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(x, highY);
+                ctx.lineTo(x, lowY);
+                ctx.stroke();
+
+                // Draw body
+                ctx.fillStyle = isBullish ? '#2ecc71' : '#e74c3c';
+                const bodyHeight = Math.abs(closeY - openY);
+                const bodyTop = Math.min(openY, closeY);
+                ctx.fillRect(x - candleSpacing, bodyTop, candleSpacing * 2, Math.max(bodyHeight, 1));
+
+                // Draw labels
+                if (candle.label) {
+                    ctx.globalAlpha = 1;
+                    ctx.fillStyle = '#2c3e50';
+                    ctx.font = 'bold 10px Arial';
+                    
+                    if (candle.label === 'CHoCH') {
+                        ctx.fillStyle = '#e74c3c';
+                        ctx.fillText(candle.label, x - 15, lowY + 20);
+                    } else if (candle.label === 'BOS') {
+                        ctx.fillStyle = '#e74c3c';
+                        ctx.fillText(candle.label, x - 10, lowY + 20);
+                    } else if (candle.label === 'EQH') {
+                        ctx.fillStyle = '#e74c3c';
+                        ctx.fillText('●', x - 3, highY - 10);
+                    } else if (candle.label === '💰 ENTRY') {
+                        ctx.fillStyle = '#f39c12';
+                        ctx.font = 'bold 12px Arial';
+                        ctx.fillText(candle.label, x - 20, closeY + 20);
+                    } else if (candle.label.startsWith('T')) {
+                        ctx.fillStyle = '#2ecc71';
+                        ctx.fillText(candle.label, x - 8, closeY + 15);
+                    }
+                }
+
+                ctx.globalAlpha = 1;
+            });
+
+            // Draw price labels
+            const priceLabels = [
+                { price: 468, label: 'Entry $468', color: '#f39c12' },
+                { price: 473, label: 'Stop $473', color: '#e74c3c' },
+                { price: 460, label: 'T1 $460', color: '#2ecc71' },
+                { price: 453, label: 'T2 $453', color: '#27ae60' },
+                { price: 445, label: 'T3 $445', color: '#229954' },
+            ];
+
+            priceLabels.forEach(item => {
+                const y = priceToY(item.price);
+                ctx.fillStyle = item.color;
+                ctx.font = 'bold 11px Arial';
+                ctx.fillText(item.label, width - chartPadding.right + 5, y + 4);
+            });
+
+            // Draw axis
+            ctx.strokeStyle = '#95a5a6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(chartPadding.left, chartPadding.top);
+            ctx.lineTo(chartPadding.left, height - chartPadding.bottom);
+            ctx.lineTo(width - chartPadding.right, height - chartPadding.bottom);
+            ctx.stroke();
+        }
+
+        // Interactive hover
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+
+            const width = canvas.width / window.devicePixelRatio;
+            const chartWidth = width - chartPadding.left - chartPadding.right;
+            const candleWidth = chartWidth / (priceData.length + 2);
+
+            const index = Math.floor((x - chartPadding.left) / candleWidth) - 1;
+            
+            if (index >= 0 && index < priceData.length) {
+                const candle = priceData[index];
+                tooltip.style.display = 'block';
+                tooltip.style.left = (e.clientX + 15) + 'px';
+                tooltip.style.top = (e.clientY + 15) + 'px';
+                tooltip.innerHTML = `
+                    <strong>${candle.projected ? 'Projected' : 'Historical'}</strong><br>
+                    Open: $${candle.open.toFixed(2)}<br>
+                    High: $${candle.high.toFixed(2)}<br>
+                    Low: $${candle.low.toFixed(2)}<br>
+                    Close: $${candle.close.toFixed(2)}
+                    ${candle.label ? '<br><strong>' + candle.label + '</strong>' : ''}
+                `;
+            } else {
+                tooltip.style.display = 'none';
+            }
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
+        });
+
+        // Initial draw
+        drawChart();
+    </script>
 </body>
 </html>
