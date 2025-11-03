@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Long Setup with Squeeze Momentum - Smart Money Concepts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .chart-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #priceChart {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: crosshair;
+        }
+
+        #squeezeChart {
+            background: white;
+            border-radius: 10px;
+        }
+
+        .analysis {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .analysis h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .analysis h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .confluence-score {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+        }
+
+        .confluence-score .score {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .checklist {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .checklist li {
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #11998e;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .checklist li:before {
+            content: "✅ ";
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        .trade-plan {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+
+        .trade-plan .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .trade-plan .row:last-child {
+            border-bottom: none;
+        }
+
+        .trade-plan .label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .trade-plan .value {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .legend {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .legend h3 {
+            color: #764ba2;
+            margin-bottom: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .squeeze-explanation {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .squeeze-explanation strong {
+            color: #856404;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 20px 30px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📈 Perfect Long Setup</h1>
+            <p>Smart Money Concepts + Squeeze Momentum Integration</p>
+        </div>
+
+        <div class="content">
+            <div class="chart-container">
+                <canvas id="priceChart" width="800" height="500"></canvas>
+                <canvas id="squeezeChart" width="800" height="150"></canvas>
+                <div id="tooltip" class="tooltip"></div>
+            </div>
+
+            <div class="analysis">
+                <div class="confluence-score">
+                    <div>CONFLUENCE SCORE</div>
+                    <div class="score">7/7</div>
+                    <div>Perfect Setup - All Criteria Met!</div>
+                </div>
+
+                <h2>📋 Setup Analysis</h2>
+                
+                <h3>SMC Foundation (5/5)</h3>
+                <ul class="checklist">
+                    <li><strong>Discount Zone:</strong> Price at $442 in bottom third</li>
+                    <li><strong>Bullish Structure:</strong> CHoCH followed by BOS</li>
+                    <li><strong>Order Block:</strong> Strong institutional support $440-443</li>
+                    <li><strong>Triple Confluence:</strong> Order Block + EQL + FVG</li>
+                    <li><strong>Risk/Reward:</strong> 1:4.6 ratio (Excellent!)</li>
+                </ul>
+
+                <h3>Squeeze Timing (2/2)</h3>
+                <ul class="checklist">
+                    <li><strong>Squeeze Formed:</strong> Red dots at order block (Days 1-3)</li>
+                    <li><strong>Squeeze Fired:</strong> Green dots + light blue bars (Day 4)</li>
+                </ul>
+
+                <div class="squeeze-explanation">
+                    <strong>🔑 Why This Works:</strong> The squeeze formed WHILE price consolidated in the order block. This is like a coiled spring at institutional support. When it fired bullish, volatility expanded perfectly with our SMC bias!
+                </div>
+
+                <h3>📊 Trade Execution Plan</h3>
+                <div class="trade-plan">
+                    <div class="row">
+                        <span class="label">Entry Price:</span>
+                        <span class="value">$442.00</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Stop Loss:</span>
+                        <span class="value">$437.00 (below OB + EQL)</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Target 1:</span>
+                        <span class="value">$450.00 (40% position)</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Target 2:</span>
+                        <span class="value">$457.00 (35% position)</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Target 3:</span>
+                        <span class="value">$465.00 (25% position)</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Risk Amount:</span>
+                        <span class="value">$5.00 per share</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Best R:R:</span>
+                        <span class="value">1:4.6 (to Target 3)</span>
+                    </div>
+                </div>
+
+                <h3>💡 Position Sizing Example</h3>
+                <div class="trade-plan">
+                    <div class="row">
+                        <span class="label">Account Size:</span>
+                        <span class="value">$10,000</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Risk Per Trade (1%):</span>
+                        <span class="value">$100</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Stop Distance:</span>
+                        <span class="value">$5.00</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Position Size:</span>
+                        <span class="value">20 shares ($100 ÷ $5)</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Potential Profit (T3):</span>
+                        <span class="value">$460 (4.6x risk)</span>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <h3>🎨 Chart Legend</h3>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(255, 200, 200, 0.3);"></div>
+                        <span>Premium Zone (Expensive - Sell Zone)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(200, 200, 200, 0.3);"></div>
+                        <span>Equilibrium (Neutral - No Edge)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(173, 216, 230, 0.3);"></div>
+                        <span>Discount Zone (Cheap - Buy Zone)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(0, 100, 255, 0.3);"></div>
+                        <span>Bullish Order Block (Institutional Support)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(0, 255, 0, 0.2);"></div>
+                        <span>Fair Value Gap (Price Imbalance)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: none; border: 2px dashed #888;"></div>
+                        <span>Equal Lows (Liquidity Pool)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: orange;"></div>
+                        <span>Entry Point ($442)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: red;"></div>
+                        <span>Stop Loss ($437)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #00cc00;"></div>
+                        <span>Targets ($450, $457, $465)</span>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <h3>🔧 Squeeze Indicator</h3>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: red; width: 15px; height: 15px; border-radius: 50%;"></div>
+                        <span>Red Dots = Squeeze ON (Wait - volatility contracting)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: lime; width: 15px; height: 15px; border-radius: 50%;"></div>
+                        <span>Green Dots = Squeeze OFF (Trade - volatility expanding)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: lightblue;"></div>
+                        <span>Light Blue Bars = Bullish Momentum</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: red;"></div>
+                        <span>Red Bars = Bearish Momentum</span>
+                    </div>
+                </div>
+
+                <h3>⏱️ Timeline</h3>
+                <div class="trade-plan">
+                    <div class="row">
+                        <span class="label">Day 1-2:</span>
+                        <span class="value">Price pulls back to OB, squeeze forms</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Day 3:</span>
+                        <span class="value">Consolidation continues, WAIT</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Day 4:</span>
+                        <span class="value">Squeeze fires! 💰 ENTER LONG</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Day 5-7:</span>
+                        <span class="value">Explosive move to targets</span>
+                    </div>
+                </div>
+
+                <h3>✅ Why This is A+ Setup</h3>
+                <ul class="checklist">
+                    <li>All 5 SMC criteria perfectly aligned</li>
+                    <li>Squeeze formed AT the order block (patience paid off)</li>
+                    <li>Squeeze fired in our direction (momentum confirmation)</li>
+                    <li>Triple confluence (OB + EQL + FVG)</li>
+                    <li>Excellent R:R ratio (1:4.6)</li>
+                    <li>Entry at precise institutional level</li>
+                    <li>Clear invalidation point (stop below structure)</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-button">← Back to Tutorial</a>
+    </div>
+
+    <script>
+        // Price chart data
+        const priceData = [
+            {open: 455, high: 458, low: 452, close: 454},  // Downtrend
+            {open: 454, high: 455, low: 448, close: 450},
+            {open: 450, high: 451, low: 445, close: 446},
+            {open: 446, high: 448, low: 443, close: 445},  // CHoCH
+            {open: 445, high: 458, low: 444, close: 456},  // Strong bullish (BOS)
+            {open: 456, high: 460, low: 454, close: 458},
+            {open: 458, high: 462, low: 456, close: 459},
+            {open: 459, high: 460, low: 454, close: 455},  // Pullback starts
+            {open: 455, high: 456, low: 449, close: 450},
+            {open: 450, high: 452, low: 446, close: 447},
+            {open: 447, high: 449, low: 443, close: 444},  // Day 1 at OB
+            {open: 444, high: 446, low: 441, close: 443},  // Day 2 at OB (squeeze forming)
+            {open: 443, high: 445, low: 441, close: 442},  // Day 3 consolidation
+            {open: 442, high: 444, low: 441, close: 442},  // Day 4 - ENTRY (squeeze fires)
+            {open: 442, high: 452, low: 441, close: 450},  // Explosive move
+            {open: 450, high: 458, low: 449, close: 456},
+            {open: 456, high: 465, low: 455, close: 463},
+            {open: 463, high: 468, low: 462, close: 465}
+        ];
+
+        // Squeeze data (0 = squeeze ON/red dots, 1 = squeeze OFF/green dots)
+        // Momentum values (positive = bullish bars, negative = bearish bars)
+        const squeezeData = [
+            {squeeze: 1, momentum: -8},   // Bearish momentum, no squeeze
+            {squeeze: 1, momentum: -12},
+            {squeeze: 1, momentum: -15},
+            {squeeze: 1, momentum: -10},
+            {squeeze: 1, momentum: 5},    // CHoCH - momentum shifts
+            {squeeze: 1, momentum: 18},   // BOS - strong bullish
+            {squeeze: 1, momentum: 22},
+            {squeeze: 1, momentum: 15},
+            {squeeze: 1, momentum: 8},
+            {squeeze: 1, momentum: 3},
+            {squeeze: 0, momentum: 1},    // Day 1 - Squeeze forms (red dots)
+            {squeeze: 0, momentum: 0},    // Day 2 - Squeeze continues
+            {squeeze: 0, momentum: -1},   // Day 3 - Still in squeeze
+            {squeeze: 1, momentum: 5},    // Day 4 - SQUEEZE FIRES! (green dots + bullish bars)
+            {squeeze: 1, momentum: 15},   // Explosive momentum
+            {squeeze: 1, momentum: 22},
+            {squeeze: 1, momentum: 25},
+            {squeeze: 1, momentum: 20}
+        ];
+
+        const priceCanvas = document.getElementById('priceChart');
+        const priceCtx = priceCanvas.getContext('2d');
+        const squeezeCanvas = document.getElementById('squeezeChart');
+        const squeezeCtx = squeezeCanvas.getContext('2d');
+
+        const width = priceCanvas.width;
+        const height = priceCanvas.height;
+        const squeezeHeight = squeezeCanvas.height;
+        
+        const candleWidth = 35;
+        const candleSpacing = 10;
+        const startX = 50;
+
+        // Price range
+        const prices = priceData.flatMap(d => [d.high, d.low]);
+        const maxPrice = Math.max(...prices) + 5;
+        const minPrice = Math.min(...prices) - 5;
+
+        // Zone boundaries
+        const priceRange = maxPrice - minPrice;
+        const premiumStart = maxPrice - (priceRange / 3);
+        const discountEnd = minPrice + (priceRange / 3);
+
+        // Draw price chart
+        function drawPriceChart() {
+            // Draw zones
+            // Premium zone (top third)
+            priceCtx.fillStyle = 'rgba(255, 200, 200, 0.3)';
+            priceCtx.fillRect(0, 0, width, scaleY(premiumStart));
+            
+            // Equilibrium (middle third)
+            priceCtx.fillStyle = 'rgba(200, 200, 200, 0.3)';
+            priceCtx.fillRect(0, scaleY(premiumStart), width, scaleY(discountEnd) - scaleY(premiumStart));
+            
+            // Discount zone (bottom third)
+            priceCtx.fillStyle = 'rgba(173, 216, 230, 0.3)';
+            priceCtx.fillRect(0, scaleY(discountEnd), width, height - scaleY(discountEnd));
+
+            // Draw order block (440-443)
+            priceCtx.fillStyle = 'rgba(0, 100, 255, 0.3)';
+            priceCtx.fillRect(0, scaleY(443), width, scaleY(440) - scaleY(443));
+            priceCtx.strokeStyle = 'rgba(0, 100, 255, 0.6)';
+            priceCtx.lineWidth = 2;
+            priceCtx.strokeRect(0, scaleY(443), width, scaleY(440) - scaleY(443));
+
+            // Draw FVG (445-448)
+            priceCtx.fillStyle = 'rgba(0, 255, 0, 0.2)';
+            priceCtx.fillRect(0, scaleY(448), width, scaleY(445) - scaleY(448));
+
+            // Draw EQL at 438
+            priceCtx.strokeStyle = '#888';
+            priceCtx.lineWidth = 2;
+            priceCtx.setLineDash([5, 5]);
+            priceCtx.beginPath();
+            priceCtx.moveTo(0, scaleY(438));
+            priceCtx.lineTo(width, scaleY(438));
+            priceCtx.stroke();
+            priceCtx.setLineDash([]);
+
+            // Labels
+            priceCtx.fillStyle = '#888';
+            priceCtx.font = '12px Arial';
+            priceCtx.fillText('EQL $438', 10, scaleY(438) - 5);
+
+            // Draw grid
+            priceCtx.strokeStyle = '#eee';
+            priceCtx.lineWidth = 1;
+            for (let price = Math.ceil(minPrice); price <= maxPrice; price += 5) {
+                const y = scaleY(price);
+                priceCtx.beginPath();
+                priceCtx.moveTo(0, y);
+                priceCtx.lineTo(width, y);
+                priceCtx.stroke();
+                
+                priceCtx.fillStyle = '#666';
+                priceCtx.fillText('$' + price, 5, y - 2);
+            }
+
+            // Draw candles
+            priceData.forEach((candle, i) => {
+                const x = startX + i * (candleWidth + candleSpacing);
+                const isGreen = candle.close > candle.open;
+                
+                // Candle body
+                priceCtx.fillStyle = isGreen ? '#00cc00' : '#ff3333';
+                priceCtx.strokeStyle = isGreen ? '#00aa00' : '#cc0000';
+                priceCtx.lineWidth = 1;
+                
+                const bodyTop = Math.min(candle.open, candle.close);
+                const bodyBottom = Math.max(candle.open, candle.close);
+                const bodyHeight = Math.abs(scaleY(candle.close) - scaleY(candle.open));
+                
+                priceCtx.fillRect(x, scaleY(bodyTop), candleWidth, bodyHeight || 1);
+                priceCtx.strokeRect(x, scaleY(bodyTop), candleWidth, bodyHeight || 1);
+                
+                // Wicks
+                priceCtx.strokeStyle = isGreen ? '#00aa00' : '#cc0000';
+                priceCtx.lineWidth = 2;
+                priceCtx.beginPath();
+                priceCtx.moveTo(x + candleWidth/2, scaleY(candle.high));
+                priceCtx.lineTo(x + candleWidth/2, scaleY(candle.low));
+                priceCtx.stroke();
+
+                // Special labels
+                if (i === 4) {
+                    priceCtx.fillStyle = '#00cc00';
+                    priceCtx.font = 'bold 11px Arial';
+                    priceCtx.fillText('CHoCH', x, scaleY(candle.high) - 5);
+                    priceCtx.fillText('BOS', x, scaleY(candle.high) - 18);
+                }
+
+                if (i === 13) {
+                    priceCtx.fillStyle = 'orange';
+                    priceCtx.font = 'bold 14px Arial';
+                    priceCtx.fillText('💰 ENTRY', x - 10, scaleY(442) - 10);
+                }
+            });
+
+            // Draw entry line
+            priceCtx.strokeStyle = 'orange';
+            priceCtx.lineWidth = 2;
+            priceCtx.setLineDash([5, 3]);
+            priceCtx.beginPath();
+            priceCtx.moveTo(0, scaleY(442));
+            priceCtx.lineTo(width, scaleY(442));
+            priceCtx.stroke();
+            priceCtx.setLineDash([]);
+
+            // Draw stop loss
+            priceCtx.strokeStyle = 'red';
+            priceCtx.lineWidth = 2;
+            priceCtx.setLineDash([5, 3]);
+            priceCtx.beginPath();
+            priceCtx.moveTo(0, scaleY(437));
+            priceCtx.lineTo(width, scaleY(437));
+            priceCtx.stroke();
+            priceCtx.setLineDash([]);
+
+            // Draw targets
+            [450, 457, 465].forEach((target, i) => {
+                const colors = ['#00cc00', '#009900', '#006600'];
+                priceCtx.strokeStyle = colors[i];
+                priceCtx.lineWidth = 2;
+                priceCtx.setLineDash([3, 3]);
+                priceCtx.beginPath();
+                priceCtx.moveTo(0, scaleY(target));
+                priceCtx.lineTo(width, scaleY(target));
+                priceCtx.stroke();
+                priceCtx.fillStyle = colors[i];
+                priceCtx.font = 'bold 11px Arial';
+                priceCtx.fillText(`T${i+1}: $${target}`, width - 80, scaleY(target) - 5);
+            });
+            priceCtx.setLineDash([]);
+
+            // Timeline labels
+            priceCtx.fillStyle = '#666';
+            priceCtx.font = '11px Arial';
+            [10, 11, 12, 13].forEach((idx, i) => {
+                const x = startX + idx * (candleWidth + candleSpacing);
+                priceCtx.fillText(`Day ${i+1}`, x, height - 5);
+            });
+        }
+
+        // Draw squeeze chart
+        function drawSqueezeChart() {
+            const barWidth = candleWidth;
+            const barSpacing = candleSpacing;
+            const barStartX = startX;
+            const zeroLine = squeezeHeight / 2;
+            const maxMomentum = Math.max(...squeezeData.map(d => Math.abs(d.momentum)));
+
+            // Draw zero line
+            squeezeCtx.strokeStyle = '#666';
+            squeezeCtx.lineWidth = 1;
+            squeezeCtx.beginPath();
+            squeezeCtx.moveTo(0, zeroLine);
+            squeezeCtx.lineTo(squeezeCanvas.width, zeroLine);
+            squeezeCtx.stroke();
+
+            // Draw momentum bars and squeeze dots
+            squeezeData.forEach((data, i) => {
+                const x = barStartX + i * (barWidth + barSpacing);
+                const barHeight = (Math.abs(data.momentum) / maxMomentum) * (zeroLine - 10);
+                
+                // Momentum bar
+                if (data.momentum >= 0) {
+                    squeezeCtx.fillStyle = 'lightblue';
+                    squeezeCtx.fillRect(x, zeroLine - barHeight, barWidth, barHeight);
+                } else {
+                    squeezeCtx.fillStyle = '#ff9999';
+                    squeezeCtx.fillRect(x, zeroLine, barWidth, barHeight);
+                }
+
+                // Squeeze dots
+                const dotY = squeezeHeight - 15;
+                const dotX = x + barWidth / 2;
+                
+                squeezeCtx.beginPath();
+                squeezeCtx.arc(dotX, dotY, 5, 0, Math.PI * 2);
+                squeezeCtx.fillStyle = data.squeeze === 0 ? 'red' : 'lime';
+                squeezeCtx.fill();
+                squeezeCtx.strokeStyle = data.squeeze === 0 ? '#cc0000' : '#00cc00';
+                squeezeCtx.lineWidth = 2;
+                squeezeCtx.stroke();
+            });
+
+            // Labels
+            squeezeCtx.fillStyle = '#666';
+            squeezeCtx.font = 'bold 12px Arial';
+            squeezeCtx.fillText('Squeeze Momentum Indicator', 10, 15);
+            
+            // Day 4 label
+            const entryX = barStartX + 13 * (barWidth + barSpacing);
+            squeezeCtx.fillStyle = 'orange';
+            squeezeCtx.font = 'bold 11px Arial';
+            squeezeCtx.fillText('🔥 FIRES!', entryX, 30);
+
+            // Squeeze phase labels
+            squeezeCtx.fillStyle = '#cc0000';
+            squeezeCtx.fillText('Squeeze ON', barStartX + 10 * (barWidth + barSpacing), squeezeHeight - 25);
+            
+            squeezeCtx.fillStyle = '#00cc00';
+            squeezeCtx.fillText('Squeeze OFF', barStartX + 13 * (barWidth + barSpacing), squeezeHeight - 25);
+        }
+
+        function scaleY(price) {
+            return height - ((price - minPrice) / (maxPrice - minPrice)) * height;
+        }
+
+        // Draw everything
+        drawPriceChart();
+        drawSqueezeChart();
+
+        // Tooltip interaction
+        priceCanvas.addEventListener('mousemove', (e) => {
+            const rect = priceCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const candleIndex = Math.floor((x - startX) / (candleWidth + candleSpacing));
+            
+            if (candleIndex >= 0 && candleIndex < priceData.length) {
+                const candle = priceData[candleIndex];
+                const tooltip = document.getElementById('tooltip');
+                tooltip.style.display = 'block';
+                tooltip.style.left = (e.clientX + 10) + 'px';
+                tooltip.style.top = (e.clientY + 10) + 'px';
+                tooltip.innerHTML = `
+                    <strong>Candle ${candleIndex + 1}</strong><br>
+                    O: $${candle.open}<br>
+                    H: $${candle.high}<br>
+                    L: $${candle.low}<br>
+                    C: $${candle.close}<br>
+                    ${candleIndex >= 10 && candleIndex <= 12 ? '<br><strong style="color: red;">Squeeze Forming (WAIT)</strong>' : ''}
+                    ${candleIndex === 13 ? '<br><strong style="color: lime;">Squeeze Fired! (ENTER)</strong>' : ''}
+                `;
+            }
+        });
+
+        priceCanvas.addEventListener('mouseleave', () => {
+            document.getElementById('tooltip').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
